@@ -1,0 +1,41 @@
+Introduction: 
+This project servers a purpose for an overall pratice of various in-need skills. I will be handling a project that is designed to gather weather reading from an external api source and display them. These values are further sent to an ML model that will determine wheather the user will need tot carrya n umbrella for the day. It my be simple in action, but this project will implement fastAPI, Dockers and basic XGBoost Classification Tress for ML.
+
+Structure of JSON Packages:
+data(JSON dictionary version of the response)
+│
+├── location      (dict)
+├── current       (dict)
+└── forecast      (dict)
+        │
+        └── forecastday  (list)
+                │
+                ├── day 1 (dict) 
+                |    │
+                |    ├── date (dict)
+                |    ├── date_epoch (dict)
+                |    ├── day (dict) 
+                |    |    └── ['maxtemp_c', 'mintemp_c', 'avgtemp_c', 'maxwind_kph', 'totalprecip_mm', 'avghumidity', 'daily_will_it_rain', 'daily_chance_of_rain']
+                |    └── hour(list)
+                |         └──['time_epoch','time', 'temp_c', 'is_day', 'wind_kph', 'pressure_mb', 'precip_mm', 'humidity', 'dewpoint_c', 'will_it_rain', 'gust_kph']
+                |    
+                ├── day 2 (dict)
+                └── day 3 (dict) 
+
+Features of Files:
+weatherapi.py -> responsible for connection with the weatherapi.
+main.py -> this file is a temporary file for the fetching of data fromthe json package, but can easily be replaced by database.py
+database.py -> this file will be used to create table and add row and columns to it (manipulation of the database)
+data -> a floder that willl hold the types of data that will be used during th etimeframe of the project
+hourly_data.db -> this file will hold all the raw data that will be collected hourly.
+feature_eng.py -> this file will contain all the mathematics and dataframe manipulation that will result in the final dataset that will be fed into the ML model.
+
+Feature Engineering:
+The process will include converting the database(.db) to a dataframe using pandas. This will let us perform mathematical operations to simplify the ML prediction. 
+Later, hourly data had been aggregated based on minimum, maximum and avaeage according to the date feature. This action resulted in formation of 20 columns from the previous 11 columns. 
+The following are the columns obtained- 
+('temp_c','min'), ('temp_c','max'), ('temp_c','mean'), ('humidity','min'), ('humidity','max'),('humidity','mean'), ('dewpoint_c','min'), ('dewpoint_c','max'), ('dewpoint_c','mean'), ('pressure_mb','min'), ('pressure_mb','max'), ('pressure_mb','mean'), ('wind_kph','mean'), ('gust_kph','max'), ('precip_mm','sum'), 
+('dT', 'mean'), ('dH', 'mean'), ('dP', 'mean'), ('dayofyear', ''),('month', '')
+But the following columns are expected by the peviouslt trained ML model- 
+['temperature_min', 'temperature_max', 'temperature_mean', 'relative_humidity_min', 'relative_humidity_max', 'relative_humidity_mean', 'dewpoint_min', 'dewpoint_max', 'dewpoint_mean', 'pressure_min', 'pressure_max', 'pressure_mean', 'wind_speed_mean', 'wind_gust_max', 'rain_mm', 'dT_mean', 'dH_mean', 'dP_mean', 'dayofyear', 'month', 'rain_yesterday', 'rain_last3_days', 'pressure_3day_trend', 'humidity_3day_mean']
+
