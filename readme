@@ -26,9 +26,12 @@ Features of Files:
 weatherapi.py -> responsible for connection with the weatherapi.
 main.py -> this file is a temporary file for the fetching of data fromthe json package, but can easily be replaced by database.py
 database.py -> this file will be used to create table and add row and columns to it (manipulation of the database)
-data -> a floder that willl hold the types of data that will be used during th etimeframe of the project
+data -> a folder that willl hold the types of data that will be used during th etimeframe of the project
 hourly_data.db -> this file will hold all the raw data that will be collected hourly.
 feature_eng.py -> this file will contain all the mathematics and dataframe manipulation that will result in the final dataset that will be fed into the ML model.
+model -> folder that holds the trained ML model information.
+rain_classifier.json -> this file contains the information of the externally trained and save XGBoost classifier ML model that will used inthe project.
+predict.py -> this file will be used to call the feature engineering pipeline and run the the ML model.
 
 Feature Engineering:
 The process will include converting the database(.db) to a dataframe using pandas. This will let us perform mathematical operations to simplify the ML prediction. 
