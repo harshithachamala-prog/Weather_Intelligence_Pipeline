@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as numpy
 import sqlite3 as sq 
+from datetime import datetime
 
 def load_daily():
     conn = sq.connect('data/hourly_data.db')
@@ -21,7 +22,7 @@ def load_daily():
     df["time"] = pd.to_datetime(df["time"], errors="coerce", utc=True)
     df["date"] = df["time"].dt.floor("D")  
 
-    df = df.drop(columns=['temp_lag', 'humidity_lag', 'pressure_lag', 'time_epoch', 'time'])
+    df = df.drop(columns=['temp_lag', 'humidity_lag', 'pressure_lag', 'time_epoch'])
 
     daily = df.groupby('date').agg({ 
        "temp_c": ["min", "max", "mean"],
@@ -62,6 +63,49 @@ def load_daily():
     daily['pressure_3day_trend'] = 0
     daily['humidity_3day_mean'] = daily['relative_humidity_mean']
     #print(daily.columns.tolist())
-
+    daily = daily.reset_index()
+    daily["date"] = daily["date"].astype(str)
     return daily
+
+def save_daily():
+  conn = sq.connect('data/daily_data.db')
+  conn.execute("""CREATE TABLE if not exists daily_data(
+              date TEXT PRIMARY KEY,
+              temperature_min REAL, 
+              temperature_max REAL,
+              temperature_mean REAL,
+              relative_humidity_min REAL, 
+              relative_humidity_max REAL, 
+              relative_humidity_mean REAL, 
+              dewpoint_min REAL, 
+              dewpoint_max REAL, 
+              dewpoint_mean REAL, 
+              pressure_min REAL, 
+              pressure_max REAL, 
+              pressure_mean REAL, 
+              wind_speed_mean REAL, 
+              wind_gust_max REAL, 
+              rain_mm REAL, 
+              dT_mean REAL, 
+              dH_mean REAL, 
+              dP_mean REAL, 
+              dayofyear INTEGER, 
+              month INTEGER, 
+              rain_yesterday REAL, 
+              rain_last3_days REAL, 
+              pressure_3day_trend REAL, 
+              humidity_3day_mean REAL);
+            """)
+  day = load_daily()
+  row = day.iloc[-1].tolist()
+  row = day.iloc[-1].tolist()
+
+  row = [ x.item() if hasattr(x, "item") else x for x in row]
+  print(day.dtypes)
+  print(day.iloc[-1])
+
+  conn.execute("INSERT OR REPLACE INTO daily_data VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", row)
+  conn.commit()
+  conn.close()
+
 
