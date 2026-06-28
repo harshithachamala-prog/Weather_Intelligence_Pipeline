@@ -24,8 +24,8 @@ data(JSON dictionary version of the response)
 
 Features of Files:
 weatherapi.py -> responsible for connection with the weatherapi.
-main.py -> this file is a temporary file for the fetching of data fromthe json package, but can easily be replaced by database.py
-database.py -> this file will be used to create table and add row and columns to it (manipulation of the database)
+main.py -> this file will be used for the final system integration.
+database.py -> this file will be used to create table and add row and columns to it (manipulation of the database), also for the insertion of the accurate hourly data obtained from the WeatherAPI calls into the hourly_data.db.
 data -> a folder that willl hold the types of data that will be used during th etimeframe of the project
 hourly_data.db -> this file will hold all the raw data that will be collected hourly.
 feature_eng.py -> this file will contain all the mathematics and dataframe manipulation that will result in the final dataset that will be fed into the ML model.
@@ -41,4 +41,28 @@ The following are the columns obtained-
 ('dT', 'mean'), ('dH', 'mean'), ('dP', 'mean'), ('dayofyear', ''),('month', '')
 But the following columns are expected by the peviouslt trained ML model- 
 ['temperature_min', 'temperature_max', 'temperature_mean', 'relative_humidity_min', 'relative_humidity_max', 'relative_humidity_mean', 'dewpoint_min', 'dewpoint_max', 'dewpoint_mean', 'pressure_min', 'pressure_max', 'pressure_mean', 'wind_speed_mean', 'wind_gust_max', 'rain_mm', 'dT_mean', 'dH_mean', 'dP_mean', 'dayofyear', 'month', 'rain_yesterday', 'rain_last3_days', 'pressure_3day_trend', 'humidity_3day_mean']
+
+The above is the first component of the feature engineering, but the second part of the feature engoneering includes the creation of a daily feature dataset(data/daily_data.db). Here the aggregated data from the dataframe is obtained and converted to SQLite digesteble datatypes (or else BLOB corruption) and is inserted into the new database. The next step would be for this daily_data to be used by the ML model for prediction.
+
+Automation:
+This process should include an automated way of triggering the WeatherAPI to make calls (hourly) and retrive the data depending on the current time(database.db) and send it through feature engineering to derive the dependent feature aggregated based on date(on a daily basis) that will be required by the ML model to predict(feature_eng.py). Later, this data will be loaded into a database that maintains the daily data(daily_data). 
+Now, this database will be called by the ML model(in predict.py) to make predictions after analysing the daily data. Before the automation, all of the processes are manually called by the main.py.
+But before working on the automation part, it is important to build an understanding on what is the component flow pipeline (architecture) that we will be working right now- 
+ WeatherAPI
+     |
+ Data Collection Layer
+  store_hourly_data()
+      |
+  hourly_data.db
+      |
+Feature Engineering Layer
+   save_daily()
+      |
+  daily_data.db
+       |
+  Prediction Layer
+    predict()
+
+
+
 

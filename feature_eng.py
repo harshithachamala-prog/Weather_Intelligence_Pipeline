@@ -3,6 +3,8 @@ import numpy as numpy
 import sqlite3 as sq 
 from datetime import datetime
 
+#input is hourly data (hourly_data.db) from database, output is daily data (daily_data.db)
+
 def load_daily():
     conn = sq.connect('data/hourly_data.db')
     df =  pd.read_sql_query("SELECT * FROM hourly_data", conn)
@@ -98,14 +100,19 @@ def save_daily():
             """)
   day = load_daily()
   row = day.iloc[-1].tolist()
-  row = day.iloc[-1].tolist()
 
   row = [ x.item() if hasattr(x, "item") else x for x in row]
-  print(day.dtypes)
-  print(day.iloc[-1])
+  #print(day.dtypes)
+  #print(day.iloc[-1])
 
   conn.execute("INSERT OR REPLACE INTO daily_data VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", row)
   conn.commit()
   conn.close()
 
-
+  return True
+  
+def load_daily_data():
+    conn = sq.connect('data/daily_data.db')
+    df =  pd.read_sql_query("SELECT * FROM daily_data", conn)
+    conn.close()
+    return df

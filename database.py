@@ -2,6 +2,7 @@ from weatherapi import fetch_data
 import sqlite3 as sq
 from datetime import datetime
 
+# input is hourly data from WeatherAPI, output is stored in database (hourly_data.db)
 def store_hourly_data():
     data = fetch_data()
     conn = sq.connect('data/hourly_data.db')
@@ -38,6 +39,8 @@ def store_hourly_data():
     
     conn.commit()
     conn.close()
+    
+    return True
 
 
 
