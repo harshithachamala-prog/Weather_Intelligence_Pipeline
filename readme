@@ -25,7 +25,7 @@ data(JSON dictionary version of the response)
 Features of Files:
 weatherapi.py -> responsible for connection with the weatherapi.
 main.py -> this file will be used for the final system integration.
-database.py -> this file will be used to create table and add row and columns to it (manipulation of the database), also for the insertion of the accurate hourly data obtained from the WeatherAPI calls into the hourly_data.db.
+database.py -> this file will be used to create table and add row and columns to it (manipulation of the database), also for the insertion of the accurate hourly data obtained from the WeatherAPI calls into the hourly_data.db. Also houses the Recovery of the whole system- returns missed hours and inserts intot he hourly_data.db.
 data -> a folder that willl hold the types of data that will be used during th etimeframe of the project
 hourly_data.db -> this file will hold all the raw data that will be collected hourly.
 feature_eng.py -> this file will contain all the mathematics and dataframe manipulation that will result in the final dataset that will be fed into the ML model.
@@ -65,7 +65,13 @@ Feature Engineering Layer
 
 
 Scheduler:
-This project will be using APScheduler. This is due to is ability to be containerised and it feature-rich property. it will housed in the scheduler.py.  
+This project will be using APScheduler. This is due to is ability to be containerised and it feature-rich property. it will housed in the scheduler.py. Here, we will be using an Interval Trigger (frequency - 1 hour), to time the timer. The scheduler will heavily depend ont he Recovery Mechanism- when there is a failure of the system, the hours missing will be skipped and the current hour will be added to the database. And the missing hours will be addedinto the database with the help of the Recovery Mechanism. This plan of using hte Interval Trigger was scraped beacuse a timer that follows the actual timer was more preferred here. 
+Hence, we used Cron Trigger. It follows the actual clock more closely and does justice to out hourly updated system. The following is the configurations of the scheduler - (max_instances = 1, coalesce = True, misfire_grace_time = 180)
+Here, max_instances -> the number of threads running concurrently at a time for a job.
+coalesce -> the missed fires will be dealt with accordingly base on value (True- the mised fires will be merged inot one single execution, False - the missed fires will be executed back to back.)
+misfire_grace_time -> defines how late a job is allowed to start if the scheduler was delayed (Exceution Window Contraint).
+
+
 
 
 

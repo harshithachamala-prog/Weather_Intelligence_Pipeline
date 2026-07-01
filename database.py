@@ -38,7 +38,7 @@ def store_hourly_data():
 
     today = datetime.date(now)
 
-    conn.execute("""INSERT INTO hourly_data VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
+    conn.execute("""INSERT OR IGNORE INTO hourly_data VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
 
     # get the missing hours and storing them into the database (recovery)
     hours = get_missing_hours(str(today), now_hour)
@@ -54,7 +54,7 @@ def store_hourly_data():
 
 
 def get_missing_hours(today,now_hour):
-    conn = sq.connect('data/hourly_data.db')
+    conn = sq.connect('data/hourly_data.db')  #---> makes it an independent function
     hours = []
     
     cursor = conn.execute("SELECT time FROM hourly_data WHERE time LIKE ?", (f"{today}%",))

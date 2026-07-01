@@ -1,5 +1,5 @@
 from database import store_hourly_data
-#from datetime import datetime
+from datetime import datetime
 from feature_eng import save_daily
 from predict import predict
 import time
@@ -13,7 +13,9 @@ def retry(func, retries=3, delay=120):
     return False
 
 
-if retry(store_hourly_data) :
+def main():
+    #print("main executed at:", datetime.now())
+    if retry(store_hourly_data) :
        print("Hourly data stored successfully.")
        if retry(save_daily) :
              print("Daily data stored successfully.")
@@ -23,8 +25,8 @@ if retry(store_hourly_data) :
                  print("Failed to make prediction after multiple attempts.")
        else:
         print("Failed to store daily data after multiple attempts.")
-else:
-    print("Failed to store hourly data after multiple attempts.")
+    else:
+        print("Failed to store hourly data after multiple attempts.")
 
 
         
