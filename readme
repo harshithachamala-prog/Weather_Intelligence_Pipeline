@@ -64,5 +64,9 @@ Feature Engineering Layer
     predict()
 
 
+Scheduler:
+This project will be using APScheduler. This is due to is ability to be containerised and it feature-rich property. it will housed in the scheduler.py.  
+
+
 
 

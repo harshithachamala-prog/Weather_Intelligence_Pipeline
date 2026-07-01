@@ -101,11 +101,12 @@ def save_daily():
   day = load_daily()
   row = day.iloc[-1].tolist()
 
+  
   row = [ x.item() if hasattr(x, "item") else x for x in row]
   #print(day.dtypes)
   #print(day.iloc[-1])
-
   conn.execute("INSERT OR REPLACE INTO daily_data VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", row)
+    
   conn.commit()
   conn.close()
 
