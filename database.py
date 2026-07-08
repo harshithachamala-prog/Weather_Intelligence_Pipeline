@@ -1,10 +1,15 @@
 from weatherapi import fetch_data
 import sqlite3 as sq
 from datetime import datetime
+from log_config import pipeline_logger
 
 # input is hourly data from WeatherAPI, output is stored in database (hourly_data.db)
 def store_hourly_data():
     data = fetch_data()
+    
+    if data is None:
+        return False 
+
     conn = sq.connect('data/hourly_data.db')
     conn.execute("""CREATE TABLE if not exists hourly_data(
                 time_epoch INTEGER,
@@ -42,10 +47,16 @@ def store_hourly_data():
 
     # get the missing hours and storing them into the database (recovery)
     hours = get_missing_hours(str(today), now_hour)
+    if hours:
+         pipeline_logger.warning(f"Recovery triggered. Recovering {len(hours)} missing hour(s): {hours}")
+    
     for i in hours:
         row = data['forecast']['forecastday'][0]['hour'][i].values()
         row = list(row)
         conn.execute("""INSERT OR IGNORE INTO hourly_data VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
+    
+    if hours:
+         pipeline_logger.info(f"Recovered {len(hours)} missing hour(s) successfully.")
 
     conn.commit()
     conn.close()
