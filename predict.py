@@ -1,11 +1,10 @@
 from feature_eng import load_daily_data
+from prediction import store_prediction
+from log_config import pipeline_logger
 from xgboost import XGBClassifier
 
 def predict():
     data = load_daily_data()
-    print(data.columns.tolist())
-    print(data.shape)
-    print(data.head())
 
     #running the ML model
     model = XGBClassifier()
@@ -19,13 +18,18 @@ def predict():
     latest_day= data.iloc[[-1]]
     prediction = model.predict(latest_day[feature_cols])
     probability = model.predict_proba(latest_day[feature_cols])
-    print("Prediction", prediction[0])
-    print("Probability", probability[0][1])
+    pipeline_logger.info(f"Prediction {prediction[0]}")
+    pipeline_logger.info(f"Probability {probability[0][1]}")
+
+    ans = store_prediction(prediction[0], probability[0][1])
+    if not ans:
+     return False
+
 
     if prediction[0] == 1:
-         print("Carry an Umbrella")
+         pipeline_logger.info("Carry an Umbrella")
     else:
-         print("No Umbrella Required")
+         pipeline_logger.info("No Umbrella Required")
      
     return True
 
