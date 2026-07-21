@@ -1,5 +1,5 @@
 Introduction: 
-This project servers a purpose for an overall pratice of various in-need skills. I will be handling a project that is designed to gather weather reading from an external api source and display them. These values are further sent to an ML model that will determine wheather the user will need tot carrya n umbrella for the day. It my be simple in action, but this project will implement fastAPI, Dockers and basic XGBoost Classification Tress for ML.
+This project servers a purpose for an overall pratice of various in-need skills. I will be handling a project that is designed to gather weather reading from an external api source and display them. These values are further sent to an ML model that will determine weather the user will need tot carrya n umbrella for the day. It my be simple in action, but this project will implement fastAPI, Dockers and basic XGBoost Classification Tress for ML.
 
 Structure of JSON Packages:
 data(JSON dictionary version of the response)
@@ -32,6 +32,7 @@ feature_eng.py -> this file will contain all the mathematics and dataframe manip
 model -> folder that holds the trained ML model information.
 rain_classifier.json -> this file contains the information of the externally trained and save XGBoost classifier ML model that will used inthe project.
 predict.py -> this file will be used to call the feature engineering pipeline and run the the ML model.
+model.py -> this file will contain the pydantic basemodel of the format of the information the API will produce.
 
 Feature Engineering:
 The process will include converting the database(.db) to a dataframe using pandas. This will let us perform mathematical operations to simplify the ML prediction. 

@@ -30,7 +30,11 @@ def get_prediction():
         data = sq.connect("data/prediction.db")
         cursor = data.execute("SELECT * FROM prediction WHERE DATE = DATE('now')")
         row = cursor.fetchone()
-        return row
+        if row is not None:
+            d = {'date' : row[0], 'prediction' : row[1], 'probability': row[2]}
+            return d
+        else:
+            return None
     except Exception as e:
         api_logger.error(f"Failed to retrieve data from prediction.db: {e}")
         return None

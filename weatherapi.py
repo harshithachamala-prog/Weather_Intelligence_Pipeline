@@ -5,7 +5,7 @@ from log_config import pipeline_logger
 
 def fetch_data():
     try: 
-         response = requests.get("http://api.weatherapi.com/v1/forecast.json", params={"key" : "d686112a8afb42aba9365720261106", "q": "Bangalore", "days": "3"} )
+         response = requests.get("http://api.weatherapi.com/v1/forecast.json", params={"key" : "---", "q": "Bangalore", "days": "3"} )
          response.raise_for_status()
          data = response.json()
          return data
