@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException 
 from prediction import get_prediction
-from Pydantic_schema import Prediction, DailyWeather, ApiHealth
+from pydantic_schema import Prediction, DailyWeather, ApiHealth
 from feature_eng import load_daily_data
 import os
 #import pandas as pd

@@ -1,0 +1,10 @@
+fastapi==0.139.2
+uvicorn==0.51.0
+pandas==2.3.3
+numpy==2.2.6
+requests==2.25.1
+scikit-learn==1.7.2
+xgboost==3.2.0
+APScheduler==3.11.3
+pydantic==2.12.5
+python-dotenv==1.2.2
