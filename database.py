@@ -38,12 +38,13 @@ def store_hourly_data():
     """
     now_hour = now.hour
     #row =  data['forecast']['forecastday'][0]['hour'][now_hour]
-    row = data['forecast']['forecastday'][0]['hour'][now_hour].values()
+    hour = data['forecast']['forecastday'][0]['hour'][now_hour]
+    row = make_hourly_row(hour)
     row = list(row)
 
     today = datetime.date(now)
 
-    conn.execute("""INSERT OR IGNORE INTO hourly_data VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
+    conn.execute("""INSERT OR IGNORE INTO hourly_data(time_epoch, time, temp_c, is_day, wind_kph, pressure_mb, precip_mm, humidity, dewpoint_c, will_it_rain, gust_kph) VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
 
     # get the missing hours and storing them into the database (recovery)
     hours = get_missing_hours(str(today), now_hour)
@@ -51,9 +52,9 @@ def store_hourly_data():
          pipeline_logger.warning(f"Recovery triggered. Recovering {len(hours)} missing hour(s): {hours}")
     
     for i in hours:
-        row = data['forecast']['forecastday'][0]['hour'][i].values()
-        row = list(row)
-        conn.execute("""INSERT OR IGNORE INTO hourly_data VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
+        hour = data['forecast']['forecastday'][0]['hour'][i]
+        row = make_hourly_row(hour)
+        conn.execute("""INSERT OR IGNORE INTO hourly_data(time_epoch, time, temp_c, is_day, wind_kph, pressure_mb, precip_mm, humidity, dewpoint_c, will_it_rain, gust_kph) VALUES(?,?,?,?,?,?,?,?,?,?,?)""", row)
     
     if hours:
          pipeline_logger.info(f"Recovered {len(hours)} missing hour(s) successfully.")
@@ -87,7 +88,20 @@ def get_missing_hours(today,now_hour):
 
     return hours
     
-    
+def make_hourly_row(hour):
+    return (
+        hour['time_epoch'],
+        hour['time'],
+        hour['temp_c'],
+        hour['is_day'],
+        hour['wind_kph'],
+        hour['pressure_mb'],
+        hour['precip_mm'],
+        hour['humidity'],
+        hour['dewpoint_c'],
+        hour['will_it_rain'],
+        hour['gust_kph']
+    )
     
 
 

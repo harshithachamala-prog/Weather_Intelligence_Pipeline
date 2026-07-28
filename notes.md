@@ -32,7 +32,9 @@ feature_eng.py -> this file will contain all the mathematics and dataframe manip
 model -> folder that holds the trained ML model information.
 rain_classifier.json -> this file contains the information of the externally trained and save XGBoost classifier ML model that will used inthe project.
 predict.py -> this file will be used to call the feature engineering pipeline and run the the ML model.
-model.py -> this file will contain the pydantic basemodel of the format of the information the API will produce.
+pydantic_schema.py -> this file will contain the pydantic basemodel of the format of the information the API will produce.
+api.py -> this file helps in calling the fastapi GETs.
+requirements.txt -> this file contains all the dependecies a person might need in order to execute the project.
 
 Feature Engineering:
 The process will include converting the database(.db) to a dataframe using pandas. This will let us perform mathematical operations to simplify the ML prediction. 
@@ -71,6 +73,10 @@ Hence, we used Cron Trigger. It follows the actual clock more closely and does j
 Here, max_instances -> the number of threads running concurrently at a time for a job.
 coalesce -> the missed fires will be dealt with accordingly base on value (True- the mised fires will be merged inot one single execution, False - the missed fires will be executed back to back.)
 misfire_grace_time -> defines how late a job is allowed to start if the scheduler was delayed (Exceution Window Contraint).
+
+
+FastAPI:
+The architecture for this section relies on api.py and pydantic_schema.py. The api.py module imports fastapi along with response models defined in pydantic_schema.py using Pydantic's BaseModel. API error handling is implemented by raising HTTPException instances with appropriate status codes (e.g., 404, 500). To optimize auto-generated OpenAPI documentation (/docs), routes are structured with metadata (formatting parameters) including tags, summaries, and descriptions. Additionally, api.py includes a system health check using the os library to verify file dependencies and validate that the underlying data pipeline is operationa
 
 
 

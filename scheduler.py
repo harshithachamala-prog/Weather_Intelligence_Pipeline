@@ -1,5 +1,5 @@
 from main import main
-from logs.log_config import scheduler_logger
+from log_config import scheduler_logger
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 

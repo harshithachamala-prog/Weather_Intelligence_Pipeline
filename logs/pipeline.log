@@ -1,0 +1,48 @@
+2026-07-27 06:00:00 - INFO - Pipelineexecution started
+2026-07-27 06:41:20 - INFO - Pipelineexecution started
+2026-07-27 06:41:20 - WARNING - Recovery triggered. Recovering 7 missing hour(s): [0, 1, 2, 3, 4, 5, 6]
+2026-07-27 06:41:20 - INFO - Recovered 7 missing hour(s) successfully.
+2026-07-27 06:41:20 - INFO - Hourly data stored successfully.
+2026-07-27 06:41:21 - INFO - Daily data stored successfully.
+2026-07-27 06:41:22 - INFO - Prediction 1
+2026-07-27 06:41:22 - INFO - Probability 0.7710121273994446
+2026-07-27 06:41:22 - INFO - Carry an Umbrella
+2026-07-27 06:41:22 - INFO - Prediction has been made successfully.
+2026-07-27 06:41:22 - INFO - Pipeline execution completed.
+2026-07-27 13:23:34 - INFO - Pipelineexecution started
+2026-07-27 13:23:35 - WARNING - Recovery triggered. Recovering 7 missing hour(s): [7, 8, 9, 10, 11, 12, 13]
+2026-07-27 13:23:35 - INFO - Recovered 7 missing hour(s) successfully.
+2026-07-27 13:23:35 - INFO - Hourly data stored successfully.
+2026-07-27 13:23:35 - INFO - Daily data stored successfully.
+2026-07-27 13:23:35 - INFO - Prediction 1
+2026-07-27 13:23:35 - INFO - Probability 0.9166601300239563
+2026-07-27 13:23:36 - INFO - Carry an Umbrella
+2026-07-27 13:23:36 - INFO - Prediction has been made successfully.
+2026-07-27 13:23:36 - INFO - Pipeline execution completed.
+2026-07-27 13:26:09 - INFO - Pipelineexecution started
+2026-07-27 13:26:09 - ERROR - Failed to fetch data from WeatherAPI: Expecting value: line 1 column 1 (char 0)
+2026-07-27 13:28:09 - INFO - Hourly data stored successfully.
+2026-07-27 13:28:09 - INFO - Daily data stored successfully.
+2026-07-27 13:28:09 - INFO - Prediction 1
+2026-07-27 13:28:09 - INFO - Probability 0.9166601300239563
+2026-07-27 13:28:09 - INFO - Carry an Umbrella
+2026-07-27 13:28:09 - INFO - Prediction has been made successfully.
+2026-07-27 13:28:09 - INFO - Pipeline execution completed.
+2026-07-27 13:29:17 - INFO - Pipelineexecution started
+2026-07-27 13:29:17 - INFO - Hourly data stored successfully.
+2026-07-27 13:29:18 - INFO - Daily data stored successfully.
+2026-07-27 13:29:18 - INFO - Prediction 1
+2026-07-27 13:29:18 - INFO - Probability 0.9166601300239563
+2026-07-27 13:29:18 - INFO - Carry an Umbrella
+2026-07-27 13:29:18 - INFO - Prediction has been made successfully.
+2026-07-27 13:29:18 - INFO - Pipeline execution completed.
+2026-07-27 14:00:00 - INFO - Pipelineexecution started
+2026-07-27 14:00:01 - WARNING - Recovery triggered. Recovering 1 missing hour(s): [14]
+2026-07-27 14:00:01 - INFO - Recovered 1 missing hour(s) successfully.
+2026-07-27 14:00:01 - INFO - Hourly data stored successfully.
+2026-07-27 14:00:02 - INFO - Daily data stored successfully.
+2026-07-27 14:00:03 - INFO - Prediction 1
+2026-07-27 14:00:03 - INFO - Probability 0.8870431184768677
+2026-07-27 14:00:03 - INFO - Carry an Umbrella
+2026-07-27 14:00:03 - INFO - Prediction has been made successfully.
+2026-07-27 14:00:03 - INFO - Pipeline execution completed.

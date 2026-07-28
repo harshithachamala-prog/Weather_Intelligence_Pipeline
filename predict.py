@@ -21,12 +21,14 @@ def predict():
     pipeline_logger.info(f"Prediction {prediction[0]}")
     pipeline_logger.info(f"Probability {probability[0][1]}")
 
-    ans = store_prediction(prediction[0], probability[0][1])
+    prediction = int(prediction[0])
+    probability = float(probability[0][1])
+    ans = store_prediction(prediction, probability)
     if not ans:
      return False
 
 
-    if prediction[0] == 1:
+    if prediction == 1:
          pipeline_logger.info("Carry an Umbrella")
     else:
          pipeline_logger.info("No Umbrella Required")
